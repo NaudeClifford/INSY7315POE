@@ -32,11 +32,14 @@ import {
   LogOut
 } from "lucide-react";
 
-import { getAuthUser, logoutUser } from "@/lib/auth";
+import { getAuthUser, loginUser, logoutUser } from "@/lib/auth";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   // Admin dashboard state
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [adminEmailInput, setAdminEmailInput] = useState("admin@cbphotography.co.za");
+  const [adminPassInput, setAdminPassInput] = useState("admin123");
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [photographers, setPhotographers] = useState<Photographer[]>([]);
@@ -45,17 +48,25 @@ export default function AdminDashboardPage() {
   const [filterStatus, setFilterStatus] = useState<string>("All");
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
-  // Require admin login authentication
+  // Check auth state on mount
   useEffect(() => {
     const user = getAuthUser();
-    if (!user || user.role !== "admin") {
-      window.location.assign("/login/admin");
+    if (user && user.role === "admin") {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
   }, []);
 
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginUser("admin", adminEmailInput, "Studio Admin");
+    setIsAuthenticated(true);
+  };
+
   const handleSignOut = () => {
     logoutUser();
-    window.location.assign("/login/admin");
+    setIsAuthenticated(false);
   };
 
   // Fetch all system bookings, services, and photographers on mount
@@ -98,7 +109,7 @@ export default function AdminDashboardPage() {
               Studio Admin Overview
             </h1>
             <p className="text-xs text-[#d6c8b1] mt-1">
-              Camryn Burger Photography • The Union Lab Master Management
+              Camryn Burger Photography Master Management Console
             </p>
           </div>
 
@@ -106,19 +117,68 @@ export default function AdminDashboardPage() {
             <span className="bg-[#bea683] text-[#402615] px-3 py-1.5 rounded-sm text-xs font-bold uppercase tracking-wider">
               Role: System Admin
             </span>
-            <button
-              onClick={handleSignOut}
-              className="bg-rose-900/40 hover:bg-rose-800 text-rose-200 border border-rose-500/30 text-xs font-semibold uppercase px-3.5 py-1.5 rounded-sm transition-colors flex items-center gap-1.5"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </button>
+            {isAuthenticated && (
+              <button
+                onClick={handleSignOut}
+                className="bg-rose-900/40 hover:bg-rose-800 text-rose-200 border border-rose-500/30 text-xs font-semibold uppercase px-3.5 py-1.5 rounded-sm transition-colors flex items-center gap-1.5"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Main Admin Console Area */}
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 space-y-10 w-full">
+      {!isAuthenticated ? (
+        <section className="py-20 max-w-md mx-auto px-4 flex-1 w-full">
+          <div className="bg-white p-8 rounded-sm border border-[#bea683]/50 shadow-xl space-y-6 text-center">
+            <div className="p-3 bg-[#402615] text-[#bea683] rounded-full w-fit mx-auto">
+              <ShieldCheck className="w-8 h-8" />
+            </div>
+            <h2 className="font-serif-heading text-2xl font-bold text-[#402615]">
+              Admin Console Security Access
+            </h2>
+            <p className="text-xs text-[#878679]">
+              Please authenticate below to manage business revenue metrics, client shoot registers, and team photographer assignments.
+            </p>
+            <form onSubmit={handleAdminLogin} className="space-y-4 text-left">
+              <div>
+                <label className="block text-xs uppercase font-semibold text-[#7d5e3c] mb-1">
+                  Admin Email
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={adminEmailInput}
+                  onChange={(e) => setAdminEmailInput(e.target.value)}
+                  className="w-full bg-[#f7f3ed] border border-[#bea683]/50 rounded-sm p-3 text-xs text-[#402615]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase font-semibold text-[#7d5e3c] mb-1">
+                  Security Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={adminPassInput}
+                  onChange={(e) => setAdminPassInput(e.target.value)}
+                  className="w-full bg-[#f7f3ed] border border-[#bea683]/50 rounded-sm p-3 text-xs text-[#402615]"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-[#402615] text-white text-xs font-semibold uppercase tracking-widest py-3.5 rounded-sm hover:bg-[#7d5e3c] transition-all shadow-md"
+              >
+                Access Admin Console
+              </button>
+            </form>
+          </div>
+        </section>
+      ) : (
+        /* Main Admin Console Area */
+        <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 space-y-10 w-full">
         {/* KPI Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white p-6 rounded-sm border border-[#bea683]/40 shadow-sm space-y-2">
@@ -384,6 +444,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
       </section>
+      )}
 
       <Toast toast={toast} onClose={() => setToast(null)} />
       <Footer />

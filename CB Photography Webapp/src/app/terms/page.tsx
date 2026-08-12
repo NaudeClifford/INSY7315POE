@@ -36,7 +36,7 @@ export default function TermsPage() {
             <strong className="font-semibold uppercase tracking-wider text-amber-800">
               Informational Notice:
             </strong>{" "}
-            The policies below represent standard operating rules for Camryn Burger Photography / The Union Lab. This document is provided for informational purposes on the frontend and should be formally reviewed by legal counsel prior to production use.
+            The policies below represent standard operating rules for Camryn Burger Photography. This document is provided for informational purposes on the frontend and should be formally reviewed by legal counsel prior to production use.
           </div>
         </div>
       </section>

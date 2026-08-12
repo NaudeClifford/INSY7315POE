@@ -35,12 +35,13 @@ export default function HomePage() {
   // Available portfolio gallery filter categories
   const categories: PortfolioCategory[] = [
     "All",
-    "Weddings",
-    "Matric Dances",
-    "Graduations",
-    "Corporate",
+    "Solo",
     "Couples",
-    "Events"
+    "Graduations",
+    "Events",
+    "Group",
+    "Weddings",
+    "Matric Dances"
   ];
 
   // Filter portfolio images according to selected category
@@ -65,8 +66,8 @@ export default function HomePage() {
         {/* Photography Background */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2000"
-            alt="Hero Wedding Photography backdrop"
+            src="/backgrounds/hero-bg.jpg"
+            alt="Hero Photography backdrop"
             fill
             priority
             sizes="100vw"
@@ -88,7 +89,7 @@ export default function HomePage() {
           </h1>
 
           <p className="max-w-2xl mx-auto text-sm sm:text-base text-[#d6c8b1]/90 leading-relaxed mb-10 font-light">
-            The Union Lab is a South African photography studio dedicated to documenting weddings, matric dances, graduations, corporate events and meaningful connections through timeless, editorial imagery.
+            Camryn Burger Photography is a South African photography studio dedicated to documenting weddings, matric dances, graduations, corporate events and meaningful connections through timeless, editorial imagery.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -129,7 +130,7 @@ export default function HomePage() {
                 Crafting visual heirlooms with warmth, romance & authenticity.
               </h2>
               <p className="text-sm sm:text-base text-[#7d5e3c] leading-relaxed font-light">
-                The Union Lab is a South African photography studio dedicated to documenting weddings, celebrations, milestones and meaningful connections through timeless imagery.
+                Camryn Burger Photography is a South African photography studio dedicated to documenting weddings, celebrations, milestones and meaningful connections through timeless imagery.
               </p>
               <p className="text-xs sm:text-sm text-[#878679] leading-relaxed font-light">
                 Founded by Camryn Burger in 2023, the studio started with a quiet passion for authentic storytelling. Through dedication to client trust and creative consistency, the business grew rapidly from handling fewer than five shoots a month to over 50 monthly bookings across Gauteng and national destinations.
@@ -156,7 +157,7 @@ export default function HomePage() {
             <div className="md:col-span-5 relative">
               <div className="relative h-[450px] w-full rounded-sm overflow-hidden shadow-2xl border-4 border-[#d6c8b1]">
                 <Image
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
+                  src="/backgrounds/camryn-portrait.jpg"
                   alt="Camryn Burger Founder Portrait"
                   fill
                   sizes="(max-width: 768px) 100vw, 400px"
@@ -387,12 +388,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. WHY CHOOSE THE UNION LAB */}
+      {/* 6. WHY CHOOSE CAMRYN BURGER PHOTOGRAPHY */}
       <section className="py-24 bg-[#d6c8b1]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <span className="text-xs uppercase tracking-[0.25em] text-[#7d5e3c] font-semibold">
-              The Union Lab Standard
+              The Camryn Burger Standard
             </span>
             <h2 className="font-serif-heading text-3xl sm:text-5xl text-[#402615]">
               Why Choose Our Studio

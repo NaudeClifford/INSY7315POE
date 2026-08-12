@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-4">
             <Logo variant="light" size="lg" />
             <p className="text-xs leading-relaxed text-[#d6c8b1]/90">
-              The Union Lab by Camryn Burger is a premier South African photography studio dedicated to documenting weddings, matric dances, graduations, corporate milestones and raw human connections through timeless imagery.
+              Camryn Burger Photography is a premier South African photography studio dedicated to documenting weddings, matric dances, graduations, corporate milestones and raw human connections through timeless imagery.
             </p>
             <div className="pt-2 flex items-center space-x-3 text-[#bea683]">
               <a
@@ -136,7 +136,7 @@ export const Footer: React.FC = () => {
 
         {/* Footer Bottom Bar: Copyright Notice & Internal Portal Links */}
         <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#878679] gap-4">
-          <p>© {new Date().getFullYear()} Camryn Burger Photography • The Union Lab. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Camryn Burger Photography. All rights reserved.</p>
           <div className="flex items-center space-x-6">
             <Link href="/terms" className="hover:text-[#bea683] transition-colors">Terms & Conditions</Link>
             <Link href="/login" className="hover:text-[#bea683] transition-colors">Client Portal</Link>

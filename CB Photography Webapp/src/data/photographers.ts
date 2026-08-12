@@ -11,12 +11,12 @@ export const MOCK_PHOTOGRAPHERS: Photographer[] = [
     phone: "+27 123 345 7890",
 
     role: "photographer",
-    bio: "Founder & Creative Director of The Union Lab. Over 4 years of experience documenting weddings, matric dances, and high-profile events across Gauteng and nationwide.",
+    bio: "Founder & Creative Director of Camryn Burger Photography. Over 4 years of experience documenting weddings, matric dances, and high-profile events across Gauteng and nationwide.",
     specialties: ["Weddings", "Matric Dances", "Couples", "Editorial Portraits"],
     rating: 4.98,
     completedShoots: 340,
     availableDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400",
+    avatarUrl: "/backgrounds/camryn-portrait.jpg",
     createdAt: "2023-01-15"
   },
   {
@@ -30,7 +30,7 @@ export const MOCK_PHOTOGRAPHERS: Photographer[] = [
     rating: 4.92,
     completedShoots: 160,
     availableDays: ["Tue", "Wed", "Thu", "Fri", "Sat"],
-    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+    avatarUrl: "/backgrounds/lethabo-portrait.jpg",
     createdAt: "2024-03-01"
   }
 ];

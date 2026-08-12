@@ -1,12 +1,14 @@
 // Type definitions for portfolio categories, gallery items, and delivered client photo links
 export type PortfolioCategory = 
   | "All" 
+  | "Solo"
+  | "Couples" 
+  | "Graduations" 
+  | "Events" 
+  | "Group"
   | "Weddings" 
   | "Matric Dances" 
-  | "Graduations" 
   | "Corporate" 
-  | "Couples" 
-  | "Events" 
   | "Lifestyle";
 
 // Single photo entry in the public portfolio gallery

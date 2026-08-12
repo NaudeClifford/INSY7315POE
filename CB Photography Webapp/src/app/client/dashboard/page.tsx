@@ -25,11 +25,14 @@ import {
   LogOut
 } from "lucide-react";
 
-import { getAuthUser, logoutUser } from "@/lib/auth";
+import { getAuthUser, loginUser, logoutUser } from "@/lib/auth";
 
 export default function ClientDashboardPage() {
   const router = useRouter();
   // Client portal bookings & notification state
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [clientEmailInput, setClientEmailInput] = useState("nadine.dp@gmail.com");
+  const [clientPassInput, setClientPassInput] = useState("password123");
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedInvoice, setSelectedInvoice] = useState<Booking | null>(null);
@@ -37,17 +40,25 @@ export default function ClientDashboardPage() {
   const [rescheduleDate, setRescheduleDate] = useState("");
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
-  // Require client login authentication
+  // Check auth state on mount
   useEffect(() => {
     const user = getAuthUser();
-    if (!user || user.role !== "client") {
-      window.location.assign("/login");
+    if (user && user.role === "client") {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
   }, []);
 
+  const handleClientLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginUser("client", clientEmailInput, clientEmailInput.split("@")[0]);
+    setIsAuthenticated(true);
+  };
+
   const handleSignOut = () => {
     logoutUser();
-    window.location.assign("/login");
+    setIsAuthenticated(false);
   };
 
   // Load active client bookings on mount
@@ -122,19 +133,68 @@ export default function ClientDashboardPage() {
               + Book New Shoot
             </Link>
 
-            <button
-              onClick={handleSignOut}
-              className="bg-rose-900/40 hover:bg-rose-800 text-rose-200 border border-rose-500/30 text-xs font-semibold uppercase px-3.5 py-3 rounded-sm transition-colors flex items-center gap-1.5 shrink-0"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </button>
+            {isAuthenticated && (
+              <button
+                onClick={handleSignOut}
+                className="bg-rose-900/40 hover:bg-rose-800 text-rose-200 border border-rose-500/30 text-xs font-semibold uppercase px-3.5 py-3 rounded-sm transition-colors flex items-center gap-1.5 shrink-0"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Main Dashboard Area */}
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 space-y-10 w-full">
+      {!isAuthenticated ? (
+        <section className="py-20 max-w-md mx-auto px-4 flex-1 w-full">
+          <div className="bg-white p-8 rounded-sm border border-[#bea683]/50 shadow-xl space-y-6 text-center">
+            <div className="p-3 bg-[#7d5e3c]/20 text-[#7d5e3c] rounded-full w-fit mx-auto">
+              <Calendar className="w-8 h-8" />
+            </div>
+            <h2 className="font-serif-heading text-2xl font-bold text-[#402615]">
+              Customer Portal Security Login
+            </h2>
+            <p className="text-xs text-[#878679]">
+              Please authenticate below to access your active bookings, download tax invoices, and view private photo galleries.
+            </p>
+            <form onSubmit={handleClientLogin} className="space-y-4 text-left">
+              <div>
+                <label className="block text-xs uppercase font-semibold text-[#7d5e3c] mb-1">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={clientEmailInput}
+                  onChange={(e) => setClientEmailInput(e.target.value)}
+                  className="w-full bg-[#f7f3ed] border border-[#bea683]/50 rounded-sm p-3 text-xs text-[#402615]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase font-semibold text-[#7d5e3c] mb-1">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={clientPassInput}
+                  onChange={(e) => setClientPassInput(e.target.value)}
+                  className="w-full bg-[#f7f3ed] border border-[#bea683]/50 rounded-sm p-3 text-xs text-[#402615]"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-[#7d5e3c] text-white text-xs font-semibold uppercase tracking-widest py-3.5 rounded-sm hover:bg-[#402615] transition-all shadow-md"
+              >
+                Sign In to Client Portal
+              </button>
+            </form>
+          </div>
+        </section>
+      ) : (
+        /* Main Dashboard Area */
+        <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 space-y-10 w-full">
         {/* Bookings Section */}
         <div className="bg-white border border-[#bea683]/40 rounded-sm shadow-sm overflow-hidden">
           <div className="p-6 bg-[#d6c8b1]/20 border-b border-[#bea683]/30 flex items-center justify-between">
@@ -257,6 +317,7 @@ export default function ClientDashboardPage() {
           )}
         </div>
       </section>
+      )}
 
       {/* Invoice Modal */}
       {selectedInvoice && (

@@ -27,27 +27,38 @@ import {
   LogOut
 } from "lucide-react";
 
-import { getAuthUser, logoutUser } from "@/lib/auth";
+import { getAuthUser, loginUser, logoutUser } from "@/lib/auth";
 
 export default function PhotographerDashboardPage() {
   const router = useRouter();
   // Photographer portal state
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [photoEmailInput, setPhotoEmailInput] = useState("camryn@cbphotography.co.za");
+  const [photoPassInput, setPhotoPassInput] = useState("photo123");
   const [assignedBookings, setAssignedBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"shoots" | "gallery-links">("shoots");
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
-  // Require photographer login authentication
+  // Check auth state on mount
   useEffect(() => {
     const user = getAuthUser();
-    if (!user || user.role !== "photographer") {
-      window.location.assign("/login/photographer");
+    if (user && user.role === "photographer") {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
   }, []);
 
+  const handlePhotoLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginUser("photographer", photoEmailInput, "Camryn Burger");
+    setIsAuthenticated(true);
+  };
+
   const handleSignOut = () => {
     logoutUser();
-    window.location.assign("/login/photographer");
+    setIsAuthenticated(false);
   };
 
   // Load photographer's assigned shoot schedule on mount
@@ -141,19 +152,68 @@ export default function PhotographerDashboardPage() {
             <span className="bg-[#bea683]/20 border border-[#bea683]/40 px-3 py-1.5 rounded-sm text-xs text-[#bea683] font-medium">
               Role: Lead Photographer
             </span>
-            <button
-              onClick={handleSignOut}
-              className="bg-rose-900/40 hover:bg-rose-800 text-rose-200 border border-rose-500/30 text-xs font-semibold uppercase px-3.5 py-1.5 rounded-sm transition-colors flex items-center gap-1.5"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
-            </button>
+            {isAuthenticated && (
+              <button
+                onClick={handleSignOut}
+                className="bg-rose-900/40 hover:bg-rose-800 text-rose-200 border border-rose-500/30 text-xs font-semibold uppercase px-3.5 py-1.5 rounded-sm transition-colors flex items-center gap-1.5"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Main Content Area */}
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 space-y-10 w-full">
+      {!isAuthenticated ? (
+        <section className="py-20 max-w-md mx-auto px-4 flex-1 w-full">
+          <div className="bg-white p-8 rounded-sm border border-[#bea683]/50 shadow-xl space-y-6 text-center">
+            <div className="p-3 bg-[#7d5e3c]/20 text-[#7d5e3c] rounded-full w-fit mx-auto">
+              <Camera className="w-8 h-8" />
+            </div>
+            <h2 className="font-serif-heading text-2xl font-bold text-[#402615]">
+              Photographer Portal Security Access
+            </h2>
+            <p className="text-xs text-[#878679]">
+              Please authenticate below to access assigned shoot schedules, gear checklists, and publish client Pixieset/SmugMug galleries.
+            </p>
+            <form onSubmit={handlePhotoLogin} className="space-y-4 text-left">
+              <div>
+                <label className="block text-xs uppercase font-semibold text-[#7d5e3c] mb-1">
+                  Photographer Email
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={photoEmailInput}
+                  onChange={(e) => setPhotoEmailInput(e.target.value)}
+                  className="w-full bg-[#f7f3ed] border border-[#bea683]/50 rounded-sm p-3 text-xs text-[#402615]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs uppercase font-semibold text-[#7d5e3c] mb-1">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={photoPassInput}
+                  onChange={(e) => setPhotoPassInput(e.target.value)}
+                  className="w-full bg-[#f7f3ed] border border-[#bea683]/50 rounded-sm p-3 text-xs text-[#402615]"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-[#7d5e3c] text-white text-xs font-semibold uppercase tracking-widest py-3.5 rounded-sm hover:bg-[#402615] transition-all shadow-md"
+              >
+                Access Photographer Dashboard
+              </button>
+            </form>
+          </div>
+        </section>
+      ) : (
+        /* Main Content Area */
+        <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 space-y-10 w-full">
         {/* Bookings & Shoots Management List */}
         <div className="bg-white border border-[#bea683]/40 rounded-sm shadow-sm overflow-hidden">
           <div className="p-6 bg-[#d6c8b1]/20 border-b border-[#bea683]/30 flex flex-wrap items-center justify-between gap-4">
@@ -324,6 +384,7 @@ export default function PhotographerDashboardPage() {
           )}
         </div>
       </section>
+      )}
 
       {/* External Gallery URL Modal */}
       {linkModalBooking && (

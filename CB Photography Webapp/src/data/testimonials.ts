@@ -24,7 +24,7 @@ export const MOCK_TESTIMONIALS: Testimonial[] = [
     id: "test-2",
     clientName: "Sipho & Thandi Mobisa",
     roleOrEvent: "Matric Dance Parents",
-    quote: "The Union Lab team was so professional, punctual, and patient. Our daughter's matric dance arrival photos look like they belong in Vogue. Worth every single rand!",
+    quote: "The Camryn Burger Photography team was so professional, punctual, and patient. Our daughter's matric dance arrival photos look like they belong in Vogue. Worth every single rand!",
     rating: 5,
     date: "October 2025"
   },
@@ -40,7 +40,7 @@ export const MOCK_TESTIMONIALS: Testimonial[] = [
     id: "test-4",
     clientName: "Marcus Sterling",
     roleOrEvent: "Head of Marketing, Apex Global",
-    quote: "We hired The Union Lab for our annual executive summit in Sandton. The corporate coverage and turnaround time exceeded our expectations. Highly recommended.",
+    quote: "We hired Camryn Burger Photography for our annual executive summit in Sandton. The corporate coverage and turnaround time exceeded our expectations. Highly recommended.",
     rating: 5,
     date: "January 2026"
   }

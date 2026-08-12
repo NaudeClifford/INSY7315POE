@@ -16,7 +16,7 @@ export default function AboutPage() {
     {
       year: "2023",
       title: "The Founding",
-      desc: "Camryn Burger established The Union Lab in Krugersdorp, starting with fewer than 5 client bookings per month focused on intimate portraiture and family milestones."
+      desc: "Camryn Burger established her boutique studio in Krugersdorp, starting with fewer than 5 client bookings per month focused on intimate portraiture and family milestones."
     },
     {
       year: "2024",
@@ -60,7 +60,7 @@ export default function AboutPage() {
           <div className="md:col-span-5 relative">
             <div className="relative h-[480px] w-full rounded-sm overflow-hidden border-4 border-[#d6c8b1] shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
+                src="/backgrounds/camryn-portrait.jpg"
                 alt="Camryn Burger Founder"
                 fill
                 className="object-cover"

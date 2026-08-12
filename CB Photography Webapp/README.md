@@ -1,4 +1,4 @@
-# Camryn Burger Photography • The Union Lab Web Application
+# Camryn Burger Photography Web Application
 
 Welcome to the **CB Photography Webapp** project repository! This repository contains both the **C# ASP.NET Core Solution** and the **Next.js React Web Application**.
 

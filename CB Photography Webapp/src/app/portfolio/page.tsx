@@ -21,12 +21,14 @@ export default function PortfolioPage() {
   // Available portfolio categories
   const categories: PortfolioCategory[] = [
     "All",
+    "Solo",
+    "Couples",
+    "Graduations",
+    "Events",
+    "Group",
     "Weddings",
     "Matric Dances",
-    "Graduations",
     "Corporate",
-    "Couples",
-    "Events",
     "Lifestyle"
   ];
 
@@ -51,7 +53,7 @@ export default function PortfolioPage() {
       <section className="bg-[#402615] text-[#f7f3ed] pt-32 pb-20 border-b border-[#bea683]/30 text-center relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 space-y-4">
           <span className="text-xs uppercase tracking-[0.3em] text-[#bea683] font-semibold">
-            The Union Lab Portfolio
+            Camryn Burger Photography Portfolio
           </span>
           <h1 className="font-serif-heading text-4xl sm:text-6xl font-normal">
             Timeless Imagery & Stories

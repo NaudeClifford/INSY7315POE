@@ -21,9 +21,9 @@ const inter = Inter({
 
 // Search Engine Optimization (SEO) metadata tags & favicon icons
 export const metadata: Metadata = {
-  title: "Camryn Burger Photography | The Union Lab | Luxury South African Photography",
-  description: "Timeless wedding, matric dance, graduation, corporate event, and couples photography by Camryn Burger and The Union Lab team in South Africa.",
-  keywords: ["Camryn Burger Photography", "The Union Lab", "South Africa Wedding Photographer", "Krugersdorp Photography", "Matric Dance Photography", "Corporate Photography"],
+  title: "Camryn Burger Photography | Luxury South African Photography",
+  description: "Timeless wedding, matric dance, graduation, corporate event, and couples photography by Camryn Burger in South Africa.",
+  keywords: ["Camryn Burger Photography", "South Africa Wedding Photographer", "Krugersdorp Photography", "Matric Dance Photography", "Corporate Photography"],
   icons: {
     icon: "/logos/cb-logo-brown.jpeg",
     shortcut: "/logos/cb-logo-brown.jpeg",
