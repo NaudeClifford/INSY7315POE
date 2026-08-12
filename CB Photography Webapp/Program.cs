@@ -67,26 +67,44 @@ if (app.Environment.IsDevelopment())
         // If Next.js is still starting up, present an auto-refreshing splash screen instead of crashing
         if (!isNextJsAvailable)
         {
+            bool nodeModulesExist = Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "node_modules"));
+
             context.Response.ContentType = "text/html";
-            await context.Response.WriteAsync(@"
+            await context.Response.WriteAsync($@"
                 <!DOCTYPE html>
                 <html>
                 <head>
                     <meta charset='utf-8' />
-                    <meta http-equiv='refresh' content='2' />
+                    <meta http-equiv='refresh' content='3' />
                     <title>Starting Photography Webapp...</title>
                     <style>
-                        body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; height: 100vh; margin: 0; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-                        .spinner { width: 44px; height: 44px; border: 4px solid #38bdf8; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 1s linear infinite; margin-bottom: 20px; }
-                        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-                        h2 { font-weight: 600; margin-bottom: 8px; }
-                        p { color: #94a3b8; margin: 0; font-size: 14px; }
+                        body {{ font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; min-height: 100vh; margin: 0; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; box-sizing: border-box; }}
+                        .spinner {{ width: 44px; height: 44px; border: 4px solid #38bdf8; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 1s linear infinite; margin-bottom: 20px; }}
+                        @keyframes rotation {{ 0% {{ transform: rotate(0deg); }} 100% {{ transform: rotate(360deg); }} }}
+                        h2 {{ font-weight: 600; margin-bottom: 8px; }}
+                        p {{ color: #94a3b8; margin: 0 0 16px 0; font-size: 14px; }}
+                        .card {{ background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; max-width: 520px; text-align: left; margin-top: 10px; font-size: 14px; line-height: 1.6; color: #cbd5e1; }}
+                        .card h3 {{ margin-top: 0; color: #f1f5f9; font-size: 16px; display: flex; align-items: center; gap: 8px; }}
+                        code {{ background: #0f172a; color: #38bdf8; padding: 3px 8px; border-radius: 4px; font-family: monospace; font-size: 13px; }}
+                        .warning {{ color: #fbbf24; font-weight: 600; }}
                     </style>
                 </head>
                 <body>
                     <div class='spinner'></div>
                     <h2>Starting Photography Webapp...</h2>
-                    <p>Connecting to Next.js dev server. This page will refresh automatically in 2 seconds.</p>
+                    <p>Connecting to Next.js dev server on port 3000. Auto-refreshing every 3 seconds...</p>
+
+                    <div class='card'>
+                        <h3>⚠️ Still stuck on this screen?</h3>
+                        {(nodeModulesExist ? "" : "<p class='warning'>❌ 'node_modules' folder is missing! You need to install dependencies first.</p>")}
+                        <p>Follow these quick steps in your terminal (inside the project root folder):</p>
+                        <ol style='margin: 8px 0; padding-left: 20px;'>
+                            <li>Make sure <strong>Node.js</strong> is installed on your machine.</li>
+                            {(nodeModulesExist ? "" : "<li>Run <code>npm install</code> to install required packages.</li>")}
+                            <li>Run <code>npm run dev</code> manually to see if there are any errors.</li>
+                            <li>Ensure port <code>3000</code> is not being used by another application.</li>
+                        </ol>
+                    </div>
                 </body>
                 </html>");
             return;
@@ -190,13 +208,17 @@ static void EnsureNextJsRunning(ILogger logger)
     try
     {
         logger.LogInformation("Launching Next.js dev server on port 3000...");
+        
+        bool nodeModulesExist = Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "node_modules"));
+        string cmdArgs = nodeModulesExist ? "/k npm run dev" : "/k npm install && npm run dev";
+
         var psi = new ProcessStartInfo
         {
             FileName = "cmd.exe",
-            Arguments = "/c npm run dev",
+            Arguments = cmdArgs,
             WorkingDirectory = Directory.GetCurrentDirectory(),
             UseShellExecute = true,
-            WindowStyle = ProcessWindowStyle.Minimized
+            WindowStyle = ProcessWindowStyle.Normal
         };
         Process.Start(psi);
     }
