@@ -84,6 +84,16 @@ export const MOCK_PORTFOLIO: GalleryItem[] = [
     date: "January 2026",
     photographer: "Camryn Burger"
   },
+  {
+    id: "port-solo-corp",
+    title: "Executive Headshot Solo Shoot",
+    category: "Corporate",
+    imageUrl: "/portfolio/corporate-solo-1.jpg",
+    aspectRatio: "portrait",
+    location: "Sandton Financial District",
+    date: "February 2026",
+    photographer: "Camryn Burger"
+  },
 
   // --- COUPLE SESSIONS ---
   {
@@ -179,7 +189,7 @@ export const MOCK_PORTFOLIO: GalleryItem[] = [
     photographer: "Camryn Burger"
   },
 
-  // --- EVENTS & BIRTHDAYS ---
+  // --- EVENTS & BIRTHDAYS & CORPORATE ---
   {
     id: "port-birthday-1",
     title: "21st Birthday Milestone Celebration",
@@ -189,6 +199,16 @@ export const MOCK_PORTFOLIO: GalleryItem[] = [
     location: "Fourways, Sandton",
     date: "January 2026",
     photographer: "Lethabo Ndlovu"
+  },
+  {
+    id: "port-corp-gather",
+    title: "Corporate Annual Summit & Dinner",
+    category: "Events",
+    imageUrl: "/portfolio/corporate-gathering-1.jpg",
+    aspectRatio: "landscape",
+    location: "Rosebank Convention Center",
+    date: "January 2026",
+    photographer: "Camryn Burger"
   },
 
   // --- GROUP SHOOTS ---
@@ -201,5 +221,90 @@ export const MOCK_PORTFOLIO: GalleryItem[] = [
     location: "Rosebank, JHB",
     date: "February 2026",
     photographer: "Camryn Burger"
+  },
+  {
+    id: "port-corp-grp1",
+    title: "Executive Board Leadership Shoot",
+    category: "Corporate",
+    imageUrl: "/portfolio/corporate-group-1.jpg",
+    aspectRatio: "landscape",
+    location: "Sandton, Johannesburg",
+    date: "February 2026",
+    photographer: "Camryn Burger"
+  },
+  {
+    id: "port-corp-grp2",
+    title: "Department Team Synergy Group Session",
+    category: "Corporate",
+    imageUrl: "/portfolio/corporate-group-2.jpg",
+    aspectRatio: "landscape",
+    location: "Pretoria Business Hub",
+    date: "January 2026",
+    photographer: "Lethabo Ndlovu"
+  },
+
+  // --- MATRIC DANCES ---
+  {
+    id: "port-matric-1",
+    title: "Matric Farewell Red Carpet Arrival",
+    category: "Matric Dances",
+    imageUrl: "/portfolio/matric-dance-1.jpg",
+    aspectRatio: "portrait",
+    location: "Centurion, Pretoria",
+    date: "October 2025",
+    photographer: "Camryn Burger"
+  },
+  {
+    id: "port-matric-2",
+    title: "Matric Dance Ballgown Glamour Portrait",
+    category: "Matric Dances",
+    imageUrl: "/portfolio/matric-solo-1.jpg",
+    aspectRatio: "portrait",
+    location: "Bedfordview, JHB",
+    date: "November 2025",
+    photographer: "Camryn Burger"
+  },
+
+  // --- WEDDINGS ---
+  {
+    id: "port-wedding-1",
+    title: "Luxury Vineyard Wedding Ceremony",
+    category: "Weddings",
+    imageUrl: "/portfolio/wedding-1.jpg",
+    aspectRatio: "landscape",
+    location: "Muldersdrift Estate",
+    date: "January 2026",
+    photographer: "Camryn Burger"
+  },
+  {
+    id: "port-wedding-2",
+    title: "Romantic Reception Toast & Celebration",
+    category: "Weddings",
+    imageUrl: "/portfolio/wedding-2.jpg",
+    aspectRatio: "landscape",
+    location: "Stellenbosch Wine Estate",
+    date: "December 2025",
+    photographer: "Camryn Burger"
+  },
+  {
+    id: "port-wedding-3",
+    title: "Sunset Bridal & Groom Portraiture",
+    category: "Weddings",
+    imageUrl: "/portfolio/wedding-3.jpg",
+    aspectRatio: "portrait",
+    location: "Cradle of Humankind",
+    date: "February 2026",
+    photographer: "Camryn Burger"
+  },
+  {
+    id: "port-wedding-solo",
+    title: "Bridal Elegance Solo Portrait",
+    category: "Weddings",
+    imageUrl: "/portfolio/wedding-solo-1.jpg",
+    aspectRatio: "portrait",
+    location: "Pretoria Country Estate",
+    date: "January 2026",
+    photographer: "Lethabo Ndlovu"
   }
 ];
+

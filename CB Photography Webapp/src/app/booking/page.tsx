@@ -433,8 +433,10 @@ function BookingWizardContent() {
                           : "border-[#bea683]/30 bg-white/50"
                       }`}
                     >
-                      <div className="relative w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#bea683]">
-                        <Image src={photo.avatarUrl!} alt={photo.name} fill className="object-cover" />
+                      <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#bea683] bg-[#bea683]/20 flex items-center justify-center text-center p-1">
+                        <span className="text-[9px] uppercase font-bold text-[#7d5e3c] leading-tight">
+                          {photo.avatarUrl}
+                        </span>
                       </div>
                       <div>
                         <h4 className="font-serif-heading text-lg font-semibold text-[#402615]">

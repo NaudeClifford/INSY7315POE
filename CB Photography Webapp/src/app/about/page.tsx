@@ -58,13 +58,10 @@ export default function AboutPage() {
       <section className="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-5 relative">
-            <div className="relative h-[480px] w-full rounded-sm overflow-hidden border-4 border-[#d6c8b1] shadow-2xl">
-              <Image
-                src="/backgrounds/camryn-portrait.jpg"
-                alt="Camryn Burger Founder"
-                fill
-                className="object-cover"
-              />
+            <div className="relative h-[480px] w-full rounded-sm overflow-hidden border-4 border-[#d6c8b1] bg-[#bea683]/20 flex items-center justify-center shadow-2xl">
+              <span className="font-serif-heading text-xl uppercase tracking-widest text-[#7d5e3c] font-bold">
+                place holder 1
+              </span>
             </div>
           </div>
 
@@ -139,8 +136,10 @@ export default function AboutPage() {
               key={photo.id}
               className="bg-[#f7f3ed] border border-[#bea683]/40 rounded-sm overflow-hidden shadow-sm p-6 flex flex-col sm:flex-row gap-6 items-center"
             >
-              <div className="relative w-36 h-36 rounded-full overflow-hidden shrink-0 border-2 border-[#bea683]">
-                <Image src={photo.avatarUrl!} alt={photo.name} fill className="object-cover" />
+              <div className="w-36 h-36 rounded-full overflow-hidden shrink-0 border-2 border-[#bea683] bg-[#bea683]/20 flex items-center justify-center text-center p-2">
+                <span className="text-xs uppercase font-bold text-[#7d5e3c] tracking-wider">
+                  {photo.avatarUrl}
+                </span>
               </div>
               <div className="space-y-2 text-center sm:text-left">
                 <h3 className="font-serif-heading text-2xl text-[#402615] font-semibold">

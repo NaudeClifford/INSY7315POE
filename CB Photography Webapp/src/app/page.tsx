@@ -155,14 +155,10 @@ export default function HomePage() {
             </div>
 
             <div className="md:col-span-5 relative">
-              <div className="relative h-[450px] w-full rounded-sm overflow-hidden shadow-2xl border-4 border-[#d6c8b1]">
-                <Image
-                  src="/backgrounds/camryn-portrait.jpg"
-                  alt="Camryn Burger Founder Portrait"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 400px"
-                  className="object-cover"
-                />
+              <div className="relative h-[450px] w-full rounded-sm overflow-hidden shadow-2xl border-4 border-[#d6c8b1] bg-[#bea683]/20 flex items-center justify-center">
+                <span className="font-serif-heading text-xl uppercase tracking-widest text-[#7d5e3c] font-bold">
+                  place holder 1
+                </span>
               </div>
               <div className="absolute -bottom-6 -left-6 bg-[#402615] text-[#f7f3ed] p-6 rounded-sm shadow-xl max-w-xs border border-[#bea683]/30">
                 <p className="font-serif-heading text-lg italic text-[#d6c8b1]">

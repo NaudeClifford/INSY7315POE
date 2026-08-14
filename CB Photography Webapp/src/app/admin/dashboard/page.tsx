@@ -401,8 +401,10 @@ export default function AdminDashboardPage() {
             {photographers.map((photo) => (
               <div key={photo.id} className="bg-white p-6 rounded-sm border border-[#bea683]/40 space-y-4 shadow-sm">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full overflow-hidden relative border border-[#bea683]">
-                    <img src={photo.avatarUrl} alt={photo.name} className="w-full h-full object-cover" />
+                  <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-[#bea683] bg-[#bea683]/20 flex items-center justify-center text-center p-1">
+                    <span className="text-[10px] uppercase font-bold text-[#7d5e3c] leading-tight">
+                      {photo.avatarUrl}
+                    </span>
                   </div>
                   <div>
                     <h4 className="font-serif-heading text-xl font-bold">{photo.name}</h4>

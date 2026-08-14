@@ -2,7 +2,11 @@ using CB_Photography_Webapp.Models;
 
 namespace CB_Photography_Webapp.Services
 {
-    public class DemoDataStore
+    /// <summary>
+    /// In-memory data store service implementing IDataStoreService interface.
+    /// Manages shoot bookings, service packages, and photographer profiles.
+    /// </summary>
+    public class DemoDataStore : IDataStoreService
     {
         private readonly List<Booking> _bookings;
         private readonly List<Service> _services;
@@ -20,7 +24,7 @@ namespace CB_Photography_Webapp.Services
                     Role = "Lead Photographer & Founder",
                     Email = "camryn@cbphotography.co.za",
                     Phone = "+27 82 456 7890",
-                    AvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400",
+                    AvatarUrl = "place holder 1",
                     Bio = "Professional lifestyle, wedding, and event photographer based in Krugersdorp, Gauteng.",
                     Specialties = new List<string> { "Weddings", "Matric Dances", "Editorial Portraits" },
                     AvailableDays = new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" },
@@ -33,7 +37,7 @@ namespace CB_Photography_Webapp.Services
                     Role = "Associate Photographer",
                     Email = "lethabo@cbphotography.co.za",
                     Phone = "+27 71 888 2345",
-                    AvatarUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+                    AvatarUrl = "place holder 2",
                     Bio = "Specialist corporate event and portrait photographer with 5 years experience.",
                     Specialties = new List<string> { "Corporate Events", "Graduations", "Commercial Headshots" },
                     AvailableDays = new List<string> { "Thursday", "Friday", "Saturday", "Sunday" },

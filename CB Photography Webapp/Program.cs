@@ -5,9 +5,9 @@ using CB_Photography_Webapp.Services;
 // Create ASP.NET Core WebApplication builder with default configurations
 var builder = WebApplication.CreateBuilder(args);
 
-// Register Model-View-Controller (MVC) services, DemoDataStore, and HttpClient into dependency injection
+// Register Model-View-Controller (MVC) services, IDataStoreService, and HttpClient into dependency injection
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<DemoDataStore>();
+builder.Services.AddSingleton<IDataStoreService, DemoDataStore>();
 builder.Services.AddHttpClient("NextJsProxy", client =>
 {
     client.Timeout = TimeSpan.FromSeconds(120);
