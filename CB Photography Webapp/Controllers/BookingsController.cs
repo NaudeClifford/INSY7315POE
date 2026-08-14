@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CB_Photography_Webapp.Controllers
 {
+    /// <summary>
+    /// API Controller managing photography shoot bookings and lifecycle status.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class BookingsController : ControllerBase
     {
-        private readonly DemoDataStore _dataStore;
+        private readonly IDataStoreService _dataStore;
 
-        public BookingsController(DemoDataStore dataStore)
+        public BookingsController(IDataStoreService dataStore)
         {
             _dataStore = dataStore;
         }

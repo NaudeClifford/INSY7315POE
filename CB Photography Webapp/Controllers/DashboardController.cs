@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CB_Photography_Webapp.Controllers
 {
+    /// <summary>
+    /// API Controller providing aggregated business metrics and admin portal overview data.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class DashboardController : ControllerBase
     {
-        private readonly DemoDataStore _dataStore;
+        private readonly IDataStoreService _dataStore;
 
-        public DashboardController(DemoDataStore dataStore)
+        public DashboardController(IDataStoreService dataStore)
         {
             _dataStore = dataStore;
         }
