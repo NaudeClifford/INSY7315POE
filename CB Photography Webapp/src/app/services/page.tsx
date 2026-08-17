@@ -45,37 +45,39 @@ export default function ServicesPage() {
       </section>
 
       {/* Main Services List */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 flex-1">
+      <section className="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24 flex-1 content-visibility-auto">
         {MOCK_SERVICES.map((service, index) => {
           const isEven = index % 2 === 0;
           return (
             <div
               key={service.id}
               id={service.slug}
-              className="bg-[#f7f3ed] border border-[#bea683]/40 rounded-sm p-6 sm:p-10 shadow-md scroll-mt-28"
+              className="bg-[#f7f3ed] border border-[#bea683]/40 rounded-sm p-5 sm:p-10 shadow-md scroll-mt-28"
             >
-              <div className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-center`}>
+              <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center`}>
                 {/* Image */}
-                <div className={`lg:col-span-5 relative h-80 sm:h-96 rounded-sm overflow-hidden border-2 border-[#d6c8b1] ${isEven ? "" : "lg:order-last"}`}>
+                <div className={`lg:col-span-5 relative h-64 sm:h-96 rounded-sm overflow-hidden border-2 border-[#d6c8b1] ${isEven ? "" : "lg:order-last"}`}>
                   <Image
                     src={service.imageUrl}
                     alt={service.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 500px"
+                    priority={index === 0}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    sizes="(max-width: 768px) 100vw, 500px"
                     className="object-cover"
                   />
-                  <div className="absolute top-4 left-4 bg-[#402615] text-[#bea683] text-xs font-semibold px-3 py-1.5 rounded-sm shadow-md">
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-[#402615] text-[#bea683] text-[11px] sm:text-xs font-semibold px-3 py-1.5 rounded-sm shadow-md">
                     Starting from R{formatCurrency(service.startingPriceZAR)}
                   </div>
                 </div>
 
                 {/* Info */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                   <div className="space-y-2">
-                    <span className="text-xs uppercase tracking-widest text-[#7d5e3c] font-semibold">
+                    <span className="text-[11px] sm:text-xs uppercase tracking-widest text-[#7d5e3c] font-semibold">
                       {service.approxDuration} • {service.editedImagesSummary}
                     </span>
-                    <h2 className="font-serif-heading text-3xl sm:text-4xl text-[#402615] font-medium">
+                    <h2 className="font-serif-heading text-2xl sm:text-4xl text-[#402615] font-medium">
                       {service.title}
                     </h2>
                     <p className="text-xs sm:text-sm text-[#7d5e3c] italic">
@@ -115,27 +117,29 @@ export default function ServicesPage() {
                             pkg.popular
                               ? "border-[#7d5e3c] bg-[#d6c8b1]/30"
                               : "border-[#bea683]/30 bg-white/40"
-                          } space-y-2`}
+                          } space-y-2 flex flex-col justify-between`}
                         >
-                          <div className="flex items-center justify-between">
-                            <h5 className="font-serif-heading text-lg font-bold text-[#402615]">
-                              {pkg.name}
-                            </h5>
-                            {pkg.popular && (
-                              <span className="text-[10px] uppercase font-bold bg-[#7d5e3c] text-white px-2 py-0.5 rounded-sm">
-                                Most Popular
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-[#878679]">{pkg.tagline}</p>
-                          <div className="text-xs font-semibold text-[#7d5e3c]">
-                            R{formatCurrency(pkg.startingPriceZAR)} • {pkg.durationHours} Hours • {pkg.editedImagesCount} Photos
+                          <div className="space-y-1.5">
+                            <div className="flex items-center justify-between">
+                              <h5 className="font-serif-heading text-lg font-bold text-[#402615]">
+                                {pkg.name}
+                              </h5>
+                              {pkg.popular && (
+                                <span className="text-[9px] uppercase font-bold bg-[#7d5e3c] text-white px-2 py-0.5 rounded-sm">
+                                  Popular
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-[11px] text-[#878679]">{pkg.tagline}</p>
+                            <div className="text-xs font-semibold text-[#7d5e3c]">
+                              R{formatCurrency(pkg.startingPriceZAR)} • {pkg.durationHours} Hours • {pkg.editedImagesCount} Photos
+                            </div>
                           </div>
 
-                          <div className="pt-2 flex justify-end">
+                          <div className="pt-3 flex justify-end">
                             <Link
                               href={`/booking?service=${service.slug}&package=${pkg.id}`}
-                              className="inline-flex items-center gap-1.5 bg-[#7d5e3c] hover:bg-[#402615] text-white text-[11px] font-semibold uppercase tracking-wider px-3.5 py-1.5 rounded-sm transition-all shadow-sm"
+                              className="inline-flex items-center justify-center gap-1.5 bg-[#7d5e3c] hover:bg-[#402615] text-white text-xs font-semibold uppercase tracking-wider px-4 py-2.5 rounded-sm transition-all shadow-sm min-h-[38px] active:scale-95 w-full sm:w-auto"
                             >
                               <Calendar className="w-3.5 h-3.5" />
                               <span>Book {pkg.name}</span>
@@ -149,7 +153,7 @@ export default function ServicesPage() {
                   <div className="pt-4 flex items-center justify-between">
                     <Link
                       href={`/booking?service=${service.slug}`}
-                      className="inline-flex items-center gap-2 bg-[#7d5e3c] hover:bg-[#402615] text-white text-xs font-semibold uppercase tracking-widest px-6 py-3.5 rounded-sm transition-all shadow-md"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#7d5e3c] hover:bg-[#402615] text-white text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-all shadow-md min-h-[44px] active:scale-95"
                     >
                       <Calendar className="w-4 h-4" />
                       <span>Book {service.title}</span>

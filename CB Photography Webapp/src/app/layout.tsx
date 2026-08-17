@@ -1,5 +1,5 @@
 // Root Layout component defining global typography fonts, metadata, and HTML structure
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -18,6 +18,15 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
+
+// Mobile Viewport Configuration
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: "#402615",
+};
 
 // Search Engine Optimization (SEO) metadata tags & favicon icons
 export const metadata: Metadata = {
@@ -40,6 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[#f7f3ed] text-[#402615]">

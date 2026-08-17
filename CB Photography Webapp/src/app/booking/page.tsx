@@ -269,8 +269,8 @@ function BookingWizardContent() {
       {/* Main Wizard Area */}
       <section className="py-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 w-full">
         {/* Stepper Progress Bar */}
-        <div className="mb-10 overflow-x-auto pb-4">
-          <div className="flex items-center justify-between min-w-[650px] relative">
+        <div className="mb-8 sm:mb-10 overflow-x-auto no-scrollbar pb-3">
+          <div className="flex items-center justify-between min-w-[620px] relative px-2">
             {stepTitles.map((title, idx) => {
               const stepNum = idx + 1;
               const isCompleted = stepNum < currentStep;
@@ -312,9 +312,14 @@ function BookingWizardContent() {
         {/* STEP 1: SELECT SERVICE */}
         {currentStep === 1 && (
           <div className="bg-[#f7f3ed] border border-[#bea683]/40 rounded-sm p-6 sm:p-8 space-y-6 shadow-sm animate-fade-in">
-            <h2 className="font-serif-heading text-2xl text-[#402615]">
-              Step 1: Select a Photography Service
-            </h2>
+            <div>
+              <span className="text-xs uppercase tracking-widest text-[#7d5e3c] font-semibold">
+                Tap to Select & Continue
+              </span>
+              <h2 className="font-serif-heading text-2xl text-[#402615]">
+                Step 1: Select a Photography Service
+              </h2>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {MOCK_SERVICES.map((serv) => {
                 const isSelected = selectedService?.id === serv.id;
@@ -324,8 +329,10 @@ function BookingWizardContent() {
                     onClick={() => {
                       setSelectedService(serv);
                       if (serv.packages.length > 0) setSelectedPackage(serv.packages[0]);
+                      setCurrentStep(2);
+                      window.scrollTo({ top: 160, behavior: "smooth" });
                     }}
-                    className={`p-5 rounded-sm border cursor-pointer transition-all ${
+                    className={`p-5 rounded-sm border cursor-pointer transition-all active:scale-98 ${
                       isSelected
                         ? "border-[#7d5e3c] bg-[#d6c8b1]/30 ring-2 ring-[#7d5e3c]/20 shadow-md"
                         : "border-[#bea683]/30 bg-white/50 hover:bg-[#d6c8b1]/10"
@@ -338,8 +345,13 @@ function BookingWizardContent() {
                       {serv.title}
                     </h3>
                     <p className="text-xs text-[#878679] line-clamp-2">{serv.description}</p>
-                    <div className="text-xs font-semibold text-[#7d5e3c]">
-                      From R{formatCurrency(serv.startingPriceZAR)}
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-xs font-semibold text-[#7d5e3c]">
+                        From R{formatCurrency(serv.startingPriceZAR)}
+                      </span>
+                      <span className="text-[11px] font-bold text-[#7d5e3c] uppercase tracking-wider flex items-center gap-1">
+                        Select →
+                      </span>
                     </div>
                   </div>
                 );
@@ -353,7 +365,7 @@ function BookingWizardContent() {
           <div className="bg-[#f7f3ed] border border-[#bea683]/40 rounded-sm p-6 sm:p-8 space-y-6 shadow-sm animate-fade-in">
             <div>
               <span className="text-xs uppercase tracking-widest text-[#7d5e3c]">
-                {selectedService.title}
+                {selectedService.title} • Tap to Choose
               </span>
               <h2 className="font-serif-heading text-2xl text-[#402615]">
                 Step 2: Choose Your Package Tier
@@ -366,8 +378,12 @@ function BookingWizardContent() {
                 return (
                   <div
                     key={pkg.id}
-                    onClick={() => setSelectedPackage(pkg)}
-                    className={`p-6 rounded-sm border cursor-pointer transition-all flex flex-col justify-between ${
+                    onClick={() => {
+                      setSelectedPackage(pkg);
+                      setCurrentStep(3);
+                      window.scrollTo({ top: 160, behavior: "smooth" });
+                    }}
+                    className={`p-6 rounded-sm border cursor-pointer transition-all flex flex-col justify-between active:scale-98 ${
                       isSelected
                         ? "border-[#7d5e3c] bg-[#d6c8b1]/40 ring-2 ring-[#7d5e3c]/20 shadow-md"
                         : "border-[#bea683]/30 bg-white/50 hover:bg-[#d6c8b1]/10"
@@ -401,6 +417,13 @@ function BookingWizardContent() {
                         </li>
                       ))}
                     </ul>
+
+                    <button
+                      type="button"
+                      className="w-full mt-4 bg-[#7d5e3c] text-white text-xs font-semibold uppercase tracking-wider py-2.5 rounded-sm shadow-sm flex items-center justify-center gap-1"
+                    >
+                      <span>Choose {pkg.name} →</span>
+                    </button>
                   </div>
                 );
               })}
@@ -464,14 +487,14 @@ function BookingWizardContent() {
                   min={new Date().toISOString().split("T")[0]}
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full bg-white border border-[#bea683]/50 rounded-sm p-3 text-sm focus:outline-none focus:border-[#7d5e3c]"
+                  className="w-full bg-white border border-[#bea683]/50 rounded-sm p-3 text-base sm:text-sm focus:outline-none focus:border-[#7d5e3c]"
                 />
               </div>
 
               {/* Select Time Slot */}
               <div>
                 <label className="block text-xs uppercase tracking-wider font-semibold text-[#7d5e3c] mb-2">
-                  Select Time Slot
+                  Select Time Slot (Tapping advances to location)
                 </label>
                 {loadingSlots ? (
                   <p className="text-xs text-[#878679]">Checking photographer calendar...</p>
@@ -483,10 +506,16 @@ function BookingWizardContent() {
                       <button
                         key={slot}
                         type="button"
-                        onClick={() => setSelectedTimeSlot(slot)}
-                        className={`p-2.5 rounded-sm text-xs font-medium border text-center transition-all ${
+                        onClick={() => {
+                          setSelectedTimeSlot(slot);
+                          setTimeout(() => {
+                            setCurrentStep(4);
+                            window.scrollTo({ top: 160, behavior: "smooth" });
+                          }, 250);
+                        }}
+                        className={`p-3 min-h-[44px] rounded-sm text-xs font-medium border text-center transition-all cursor-pointer active:scale-95 ${
                           selectedTimeSlot === slot
-                            ? "bg-[#7d5e3c] text-white border-[#7d5e3c]"
+                            ? "bg-[#7d5e3c] text-white border-[#7d5e3c] font-bold"
                             : "bg-white text-[#402615] border-[#bea683]/40 hover:bg-[#d6c8b1]/20"
                         }`}
                       >
@@ -853,7 +882,7 @@ function BookingWizardContent() {
               <button
                 type="button"
                 onClick={handlePrevStep}
-                className="inline-flex items-center gap-1.5 text-xs uppercase font-semibold text-[#7d5e3c] hover:text-[#402615] px-4 py-2 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs uppercase font-semibold text-[#7d5e3c] hover:text-[#402615] px-5 py-3 rounded-sm transition-all min-h-[44px] active:scale-95 border border-[#bea683]/30 bg-white/40"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -866,7 +895,7 @@ function BookingWizardContent() {
               type="button"
               onClick={handleNextStep}
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 bg-[#7d5e3c] hover:bg-[#402615] text-white text-xs font-semibold uppercase tracking-widest px-8 py-3.5 rounded-sm transition-all shadow-md"
+              className="inline-flex items-center justify-center gap-2 bg-[#7d5e3c] hover:bg-[#402615] text-white text-xs font-semibold uppercase tracking-widest px-8 py-3.5 rounded-sm transition-all shadow-md min-h-[44px] active:scale-95"
             >
               <span>{currentStep === 6 ? "Confirm & Book" : "Next Step"}</span>
               <ChevronRight className="w-4 h-4" />

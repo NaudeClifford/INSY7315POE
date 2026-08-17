@@ -62,7 +62,7 @@ export default function HomePage() {
 
 
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden gpu-accelerate">
         {/* Photography Background */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -70,8 +70,11 @@ export default function HomePage() {
             alt="Hero Photography backdrop"
             fill
             priority
+            loading="eager"
             sizes="100vw"
-            className="object-cover object-center scale-105 transition-transform duration-10000"
+            quality={85}
+            style={{ objectFit: "cover", objectPosition: "center" }}
+            className="scale-105 transition-transform duration-10000"
           />
           {/* Dark Overlay for contrast & luxury feel */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#402615] via-black/60 to-black/80" />
@@ -92,10 +95,10 @@ export default function HomePage() {
             Camryn Burger Photography is a South African photography studio dedicated to documenting weddings, matric dances, graduations, corporate events and meaningful connections through timeless, editorial imagery.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
             <Link
               href="/booking"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#7d5e3c] hover:bg-[#bea683] text-white hover:text-[#402615] text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-all duration-300 shadow-xl border border-[#bea683]/40"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#7d5e3c] hover:bg-[#bea683] text-white hover:text-[#402615] text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-all duration-300 shadow-xl border border-[#bea683]/40 min-h-[44px] active:scale-95"
             >
               <Calendar className="w-4 h-4" />
               <span>Book a Shoot</span>
@@ -103,7 +106,7 @@ export default function HomePage() {
 
             <Link
               href="/portfolio"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-black/40 hover:bg-white/10 text-[#f7f3ed] text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-all duration-300 border border-[#bea683]/30 backdrop-blur-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-black/40 hover:bg-white/10 text-[#f7f3ed] text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-all duration-300 border border-[#bea683]/30 backdrop-blur-sm min-h-[44px] active:scale-95"
             >
               <span>View Portfolio</span>
               <ArrowRight className="w-4 h-4" />
@@ -112,16 +115,16 @@ export default function HomePage() {
         </div>
 
         {/* Subtle Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-[#d6c8b1]/70 animate-bounce">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-[#d6c8b1]/70 animate-bounce pointer-events-none">
           <span className="text-[10px] uppercase tracking-widest mb-1">Scroll</span>
           <ChevronDown className="w-4 h-4" />
         </div>
       </section>
 
       {/* 2. INTRODUCTION SECTION */}
-      <section className="py-24 bg-[#f7f3ed] border-b border-[#bea683]/20">
+      <section className="py-16 sm:py-24 bg-[#f7f3ed] border-b border-[#bea683]/20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
             <div className="md:col-span-7 space-y-6">
               <span className="text-xs uppercase tracking-[0.25em] text-[#7d5e3c] font-semibold">
                 About The Studio
@@ -136,35 +139,35 @@ export default function HomePage() {
                 Founded by Camryn Burger in 2023, the studio started with a quiet passion for authentic storytelling. Through dedication to client trust and creative consistency, the business grew rapidly from handling fewer than five shoots a month to over 50 monthly bookings across Gauteng and national destinations.
               </p>
 
-              <div className="pt-4 flex items-center space-x-8">
+              <div className="pt-4 flex items-center justify-between sm:justify-start sm:space-x-8 text-center sm:text-left">
                 <div>
-                  <span className="block font-serif-heading text-3xl text-[#402615]">50+</span>
-                  <span className="text-[11px] uppercase tracking-wider text-[#878679]">Monthly Shoots</span>
+                  <span className="block font-serif-heading text-2xl sm:text-3xl text-[#402615]">50+</span>
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#878679]">Monthly Shoots</span>
                 </div>
                 <div className="h-8 w-px bg-[#bea683]/30" />
                 <div>
-                  <span className="block font-serif-heading text-3xl text-[#402615]">100%</span>
-                  <span className="text-[11px] uppercase tracking-wider text-[#878679]">Client Satisfaction</span>
+                  <span className="block font-serif-heading text-2xl sm:text-3xl text-[#402615]">100%</span>
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#878679]">Satisfaction</span>
                 </div>
                 <div className="h-8 w-px bg-[#bea683]/30" />
                 <div>
-                  <span className="block font-serif-heading text-3xl text-[#402615]">14 Days</span>
-                  <span className="text-[11px] uppercase tracking-wider text-[#878679]">Fast Turnaround</span>
+                  <span className="block font-serif-heading text-2xl sm:text-3xl text-[#402615]">14 Days</span>
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#878679]">Turnaround</span>
                 </div>
               </div>
             </div>
 
-            <div className="md:col-span-5 relative">
-              <div className="relative h-[450px] w-full rounded-sm overflow-hidden shadow-2xl border-4 border-[#d6c8b1] bg-[#bea683]/20 flex items-center justify-center">
-                <span className="font-serif-heading text-xl uppercase tracking-widest text-[#7d5e3c] font-bold">
-                  place holder 1
+            <div className="md:col-span-5 relative mt-6 md:mt-0">
+              <div className="relative h-64 sm:h-[450px] w-full rounded-sm overflow-hidden shadow-2xl border-4 border-[#d6c8b1] bg-[#bea683]/20 flex items-center justify-center">
+                <span className="font-serif-heading text-lg sm:text-xl uppercase tracking-widest text-[#7d5e3c] font-bold">
+                  Camryn Burger Studio
                 </span>
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-[#402615] text-[#f7f3ed] p-6 rounded-sm shadow-xl max-w-xs border border-[#bea683]/30">
-                <p className="font-serif-heading text-lg italic text-[#d6c8b1]">
+              <div className="absolute -bottom-4 sm:-bottom-6 -left-2 sm:-left-6 bg-[#402615] text-[#f7f3ed] p-4 sm:p-6 rounded-sm shadow-xl max-w-[280px] sm:max-w-xs border border-[#bea683]/30">
+                <p className="font-serif-heading text-sm sm:text-lg italic text-[#d6c8b1]">
                   "Every photograph should evoke the exact feeling of the moment."
                 </p>
-                <span className="block text-[11px] uppercase tracking-widest text-[#bea683] mt-2 font-semibold">
+                <span className="block text-[10px] sm:text-[11px] uppercase tracking-widest text-[#bea683] mt-2 font-semibold">
                   — Camryn Burger, Founder
                 </span>
               </div>
@@ -174,9 +177,9 @@ export default function HomePage() {
       </section>
 
       {/* 3. FEATURED SERVICES */}
-      <section className="py-24 bg-[#d6c8b1]/20 border-b border-[#bea683]/20">
+      <section className="py-16 sm:py-24 bg-[#d6c8b1]/20 border-b border-[#bea683]/20 content-visibility-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
             <span className="text-xs uppercase tracking-[0.25em] text-[#7d5e3c] font-semibold">
               Our Expertise
             </span>
@@ -188,24 +191,24 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {MOCK_SERVICES.map((service) => (
               <div
                 key={service.id}
                 className="group bg-[#f7f3ed] border border-[#bea683]/30 rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="relative h-64 w-full overflow-hidden">
+                  <div className="relative h-56 sm:h-64 w-full overflow-hidden">
                     <Image
                       src={service.imageUrl}
                       alt={service.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, 400px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[#f7f3ed]">
-                      <span className="text-[11px] uppercase tracking-wider font-semibold text-[#bea683] bg-black/40 px-2.5 py-1 rounded-sm backdrop-blur-sm">
+                      <span className="text-[11px] uppercase tracking-wider font-semibold text-[#bea683] bg-black/50 px-2.5 py-1 rounded-sm backdrop-blur-sm">
                         From R{formatCurrency(service.startingPriceZAR)}
                       </span>
 
@@ -215,8 +218,8 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <div className="p-6 space-y-3">
-                    <h3 className="font-serif-heading text-2xl text-[#402615] font-medium group-hover:text-[#7d5e3c] transition-colors">
+                  <div className="p-5 sm:p-6 space-y-3">
+                    <h3 className="font-serif-heading text-xl sm:text-2xl text-[#402615] font-medium group-hover:text-[#7d5e3c] transition-colors">
                       {service.title}
                     </h3>
                     <p className="text-xs text-[#878679] leading-relaxed line-clamp-3">
@@ -225,7 +228,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="p-6 pt-0">
+                <div className="p-5 sm:p-6 pt-0">
                   <hr className="border-[#bea683]/20 mb-4" />
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] text-[#7d5e3c] font-medium">
@@ -233,7 +236,7 @@ export default function HomePage() {
                     </span>
                     <Link
                       href={`/booking?service=${service.slug}`}
-                      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#402615] hover:text-[#7d5e3c] transition-colors"
+                      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-[#402615] hover:text-[#7d5e3c] transition-colors py-2 active:scale-95"
                     >
                       <span>Book Service</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -244,10 +247,10 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-12 text-center">
+          <div className="mt-10 sm:mt-12 text-center">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 bg-[#402615] text-[#f7f3ed] hover:bg-[#7d5e3c] text-xs font-semibold uppercase tracking-widest px-8 py-3.5 rounded-sm transition-colors shadow-md"
+              className="inline-flex items-center gap-2 bg-[#402615] text-[#f7f3ed] hover:bg-[#7d5e3c] text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-colors shadow-md min-h-[44px] active:scale-95"
             >
               <span>Explore All Packages & Add-ons</span>
               <ArrowRight className="w-4 h-4" />
@@ -257,9 +260,9 @@ export default function HomePage() {
       </section>
 
       {/* 4. FEATURED PORTFOLIO GALLERY */}
-      <section className="py-24 bg-[#402615] text-[#f7f3ed]">
+      <section className="py-16 sm:py-24 bg-[#402615] text-[#f7f3ed] content-visibility-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
             <div className="space-y-3">
               <span className="text-xs uppercase tracking-[0.25em] text-[#bea683] font-semibold">
                 Visual Showcase
@@ -269,16 +272,16 @@ export default function HomePage() {
               </h2>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="flex flex-wrap gap-2">
+            {/* Mobile Touch Stacked Filter Tabs */}
+            <div className="flex flex-wrap items-center gap-2 max-w-full">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-sm transition-all ${
+                  className={`text-xs uppercase tracking-wider px-3.5 py-2 rounded-sm transition-all shrink-0 min-h-[38px] active:scale-95 cursor-pointer ${
                     selectedCategory === cat
-                      ? "bg-[#bea683] text-[#402615] font-semibold"
-                      : "bg-white/5 text-[#d6c8b1] hover:bg-white/10 hover:text-white"
+                      ? "bg-[#bea683] text-[#402615] font-semibold shadow-md"
+                      : "bg-white/10 text-[#d6c8b1] hover:bg-white/20 hover:text-white"
                   }`}
                 >
                   {cat}
@@ -287,29 +290,30 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Editorial Masonry Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Editorial Responsive Grid (Uniform Fixed Box Size) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredPortfolio.map((item, index) => (
               <div
                 key={item.id}
                 onClick={() => openLightbox(index)}
-                className="group relative h-80 sm:h-96 rounded-sm overflow-hidden cursor-pointer shadow-lg border border-[#bea683]/20"
+                className="group relative h-64 sm:h-80 w-full rounded-sm overflow-hidden cursor-pointer bg-[#2b190e] border border-[#bea683]/40 shadow-md hover:shadow-2xl transition-all duration-300 active:scale-98"
               >
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 400px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-contain p-1.5 group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                {/* Always show overlay title on mobile for better touch discovery */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 p-4 sm:p-5 flex flex-col justify-end text-white pointer-events-none">
                   <span className="text-[10px] uppercase tracking-widest text-[#bea683] font-semibold">
                     {item.category}
                   </span>
-                  <h3 className="font-serif-heading text-xl text-white font-medium">
+                  <h3 className="font-serif-heading text-base sm:text-lg font-medium mt-0.5 line-clamp-1">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#d6c8b1] mt-1 font-light">
+                  <p className="text-xs text-[#d6c8b1] mt-0.5 font-light">
                     {item.location} • {item.date}
                   </p>
                 </div>
@@ -317,10 +321,10 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-12 text-center">
+          <div className="mt-10 sm:mt-12 text-center">
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 border border-[#bea683] text-[#bea683] hover:bg-[#bea683] hover:text-[#402615] text-xs font-semibold uppercase tracking-widest px-8 py-3.5 rounded-sm transition-all"
+              className="inline-flex items-center justify-center gap-2 border border-[#bea683] text-[#bea683] hover:bg-[#bea683] hover:text-[#402615] text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-sm transition-all min-h-[44px] active:scale-95 cursor-pointer"
             >
               <span>View Full Gallery</span>
               <Camera className="w-4 h-4" />

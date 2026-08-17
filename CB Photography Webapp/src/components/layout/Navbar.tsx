@@ -20,10 +20,32 @@ export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Check login state on mount and route change
+  // Lock background scrolling when mobile menu drawer is active & attach scroll listener
   useEffect(() => {
     setAuthUser(getAuthUser());
+
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
 
   const handleSignOut = () => {
     logoutUser();
@@ -50,13 +72,13 @@ export const Navbar: React.FC = () => {
     <>
       {/* Sticky top navigation header bar */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 pointer-events-auto ${
           isScrolled
-            ? "bg-[#402615]/95 backdrop-blur-md py-3 shadow-md border-b border-[#bea683]/20 text-[#f7f3ed]"
-            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent py-5 text-[#f7f3ed]"
+            ? "bg-[#402615]/95 backdrop-blur-md py-2.5 shadow-md border-b border-[#bea683]/20 text-[#f7f3ed]"
+            : "bg-gradient-to-b from-black/85 via-black/50 to-transparent py-4 text-[#f7f3ed]"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between relative z-[100]">
           {/* Studio Brand Logo */}
           <Logo variant="light" size={isScrolled ? "sm" : "md"} />
 
@@ -86,7 +108,10 @@ export const Navbar: React.FC = () => {
           {/* Desktop Action Buttons: Staff/Client Portal Logins & Booking CTA */}
           <div className="hidden md:flex items-center space-x-3">
             <div className="relative group">
-              <button className="inline-flex items-center gap-1.5 text-xs tracking-wider uppercase font-medium text-[#d6c8b1] hover:text-white px-3 py-2 transition-colors">
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 text-xs tracking-wider uppercase font-medium text-[#d6c8b1] hover:text-white px-3 py-2 transition-colors cursor-pointer"
+              >
                 <User className="w-4 h-4 text-[#bea683]" />
                 <span>{authUser ? `Portal (${authUser.role})` : "Portal Logins"} ▾</span>
               </button>
@@ -110,8 +135,9 @@ export const Navbar: React.FC = () => {
 
                 {authUser && (
                   <button
+                    type="button"
                     onClick={handleSignOut}
-                    className="w-full text-left px-3 py-2 text-rose-300 hover:bg-rose-900/30 rounded-sm border-t border-[#bea683]/20 mt-1 flex items-center gap-2 font-semibold"
+                    className="w-full text-left px-3 py-2 text-rose-300 hover:bg-rose-900/30 rounded-sm border-t border-[#bea683]/20 mt-1 flex items-center gap-2 font-semibold cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     <span>Sign Out</span>
@@ -122,27 +148,29 @@ export const Navbar: React.FC = () => {
 
             <Link
               href="/booking"
-              className="inline-flex items-center gap-2 bg-[#7d5e3c] hover:bg-[#bea683] text-white hover:text-[#402615] text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-sm transition-all duration-300 shadow-sm border border-[#bea683]/40"
+              className="inline-flex items-center gap-2 bg-[#7d5e3c] hover:bg-[#bea683] text-white hover:text-[#402615] text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-sm transition-all duration-300 shadow-sm border border-[#bea683]/40 active:scale-95 cursor-pointer"
             >
               <Calendar className="w-4 h-4" />
               <span>Book a Shoot</span>
             </Link>
           </div>
 
-          {/* Mobile Hamburger Toggle Button */}
-          <div className="flex md:hidden items-center space-x-2">
+          {/* Mobile Hamburger Toggle Button & Direct Book Button */}
+          <div className="flex md:hidden items-center space-x-2 relative z-[105]">
             <Link
               href="/booking"
-              className="bg-[#7d5e3c] text-white text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-sm"
+              className="bg-[#7d5e3c] text-white text-xs font-semibold uppercase tracking-wider px-3.5 py-2 rounded-sm shadow-sm active:scale-95 transition-transform flex items-center gap-1.5 cursor-pointer"
             >
-              Book
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Book</span>
             </Link>
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#f7f3ed] hover:text-[#bea683] focus:outline-none"
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="p-2.5 min-w-[44px] min-h-[44px] text-[#f7f3ed] hover:text-[#bea683] active:scale-95 transition-transform flex items-center justify-center focus:outline-none cursor-pointer relative z-[105] bg-black/20 rounded-sm"
               aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-[#bea683]" /> : <Menu className="w-6 h-6 text-[#f7f3ed]" />}
             </button>
           </div>
         </div>
@@ -150,8 +178,8 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Fullscreen Slide-out Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-6 pt-24 animate-fade-in md:hidden">
-          <div className="flex flex-col space-y-4 text-center">
+        <div className="fixed inset-0 z-[90] bg-[#402615]/98 backdrop-blur-xl flex flex-col justify-between p-6 pt-24 pb-8 overflow-y-auto animate-fade-in md:hidden">
+          <div className="flex flex-col space-y-5 text-center my-auto">
             <Logo variant="light" size="lg" className="justify-center mb-2" />
             <hr className="border-[#bea683]/20 my-1" />
             {navLinks.map((link) => (
@@ -159,7 +187,7 @@ export const Navbar: React.FC = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-base font-serif-heading tracking-widest uppercase py-1 transition-colors ${
+                className={`text-lg font-serif-heading tracking-widest uppercase py-2 transition-transform active:scale-95 ${
                   isActive(link.href)
                     ? "text-[#bea683] font-semibold"
                     : "text-[#f7f3ed] hover:text-[#d6c8b1]"
@@ -170,31 +198,31 @@ export const Navbar: React.FC = () => {
             ))}
             <hr className="border-[#bea683]/20 my-1" />
             
-            <div className="space-y-2 text-xs">
-              <span className="text-[10px] uppercase tracking-widest text-[#bea683] font-bold">Portal Logins:</span>
-              <div className="flex flex-col gap-2">
+            <div className="space-y-3 text-xs pt-2">
+              <span className="text-[10px] uppercase tracking-widest text-[#bea683] font-bold">Portal Access:</span>
+              <div className="flex flex-col gap-2.5 max-w-xs mx-auto">
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="bg-[#bea683]/20 text-[#f7f3ed] py-2 px-4 rounded-sm flex items-center justify-center gap-2"
+                  className="bg-[#bea683]/20 text-[#f7f3ed] py-2.5 px-4 rounded-sm flex items-center justify-center gap-2 active:scale-98 transition-transform"
                 >
-                  <User className="w-3.5 h-3.5 text-[#bea683]" />
-                  <span>Client Login</span>
+                  <User className="w-4 h-4 text-[#bea683]" />
+                  <span>Client Portal Login</span>
                 </Link>
                 <Link
                   href="/login/photographer"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="bg-[#bea683]/20 text-[#f7f3ed] py-2 px-4 rounded-sm flex items-center justify-center gap-2"
+                  className="bg-[#bea683]/20 text-[#f7f3ed] py-2.5 px-4 rounded-sm flex items-center justify-center gap-2 active:scale-98 transition-transform"
                 >
-                  <Camera className="w-3.5 h-3.5 text-[#bea683]" />
+                  <Camera className="w-4 h-4 text-[#bea683]" />
                   <span>Photographer Login</span>
                 </Link>
                 <Link
                   href="/login/admin"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="bg-[#bea683]/30 text-[#bea683] font-bold py-2 px-4 rounded-sm flex items-center justify-center gap-2"
+                  className="bg-[#bea683]/30 text-[#bea683] font-bold py-2.5 px-4 rounded-sm flex items-center justify-center gap-2 active:scale-98 transition-transform"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <ShieldCheck className="w-4 h-4" />
                   <span>Admin Console Login</span>
                 </Link>
               </div>
@@ -203,7 +231,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="/booking"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex justify-center items-center gap-2 bg-[#7d5e3c] text-white font-semibold uppercase tracking-wider py-3 px-6 rounded-sm text-xs mt-2"
+              className="inline-flex justify-center items-center gap-2 bg-[#7d5e3c] hover:bg-[#bea683] text-white hover:text-[#402615] font-semibold uppercase tracking-wider py-3.5 px-6 rounded-sm text-xs mt-4 shadow-lg active:scale-95 transition-transform"
             >
               <Calendar className="w-4 h-4" />
               <span>Book a Shoot Now</span>
