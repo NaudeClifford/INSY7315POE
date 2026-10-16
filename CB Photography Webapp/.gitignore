@@ -1,0 +1,49 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# Next.js & Build outputs
+/.next/
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# Testing & Coverage
+/coverage
+
+# Environment Variables (Tracked for project submission)
+!.env.example
+!.env.local
+!.env
+
+# Security / Private Keys
+Keys/
+*.pfx
+
+# C# / .NET / Visual Studio outputs
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+[Bb]uildLog.*
+*.[Dd]ebug.log
+
+# Operating System & IDE junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*.pem
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Vercel
+.vercel

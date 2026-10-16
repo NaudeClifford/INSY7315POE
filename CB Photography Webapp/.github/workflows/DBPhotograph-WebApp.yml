@@ -1,0 +1,101 @@
+name: Build and deploy CB Photography
+
+on:
+  push:
+    branches:
+      - Webapp-Code
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_WEBAPP_NAME: DBPhotograph-WebApp
+  AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }}/published
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 10.0.x
+
+jobs:
+
+  # BACKEND - ASP.NET Core API
+  backend:
+    runs-on: windows-latest
+    environment: DBPhotograph_WebApp_Env
+    defaults:
+      run:
+        working-directory: "CB Photography Webapp"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+      - name: Restore
+        run: dotnet restore "CB Photography Webapp.csproj"
+
+      - name: Build
+        run: dotnet build "CB Photography Webapp.csproj" --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      - name: Test
+        run: dotnet test "CB Photography Webapp.sln" --configuration ${{ env.CONFIGURATION }} --no-build
+
+      - name: Publish
+        run: dotnet publish "CB Photography Webapp.csproj" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.DBPhotograph_WebApp_CLIENT_ID_CDE3 }}
+          tenant-id: ${{ vars.DBPhotograph_WebApp_TENANT_ID_CDE3 }}
+          subscription-id: ${{ vars.DBPhotograph_WebApp_SUBSCRIPTION_ID_CDE3 }}
+
+      - name: Deploy backend to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Logout from Azure
+        run: az logout
+
+
+  # FRONTEND - Next.js Static Web App
+  frontend:
+    runs-on: ubuntu-latest
+    environment: DBPhotograph_WebApp_Env
+    defaults:
+      run:
+        working-directory: "CB Photography Webapp"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: "CB Photography Webapp/package-lock.json"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js static export
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_BASE: https://dbphotograph-webapp-agh6b6hcdsf4fyaa.southafricanorth-01.azurewebsites.net
+
+      - name: Deploy frontend to Azure Static Web App
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.SWA_CLI_DEPLOYMENT_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: "CB Photography Webapp/out"
+          output_location: ""
+          skip_app_build: true

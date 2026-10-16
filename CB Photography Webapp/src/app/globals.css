@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Brand color palette */
+  --color-mojave: #C5A880;
+  --color-coffee: #2C2420;
+  --color-offwhite: #FAF8F5;
+  --color-almond: #EAE3D9;
+  --color-berkeley: #1D2D44;
+  --color-success: #2E5E43;
+  --color-darkbg: #141210;
+  --color-darksurface: #1F1B18;
+  --color-darkcard: #27221E;
+  --color-darkborder: #3A332C;
+  
+  --font-serif: var(--font-cormorant), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-inter), "Manrope", system-ui, sans-serif;
+}
+
+:root {
+  --background: #FAF8F5;
+  --foreground: #2C2420;
+  --card-bg: #FFFFFF;
+  --card-border: #EAE3D9;
+  --header-bg: rgba(44, 36, 32, 0.95);
+  --accent-gold: #C5A880;
+}
+
+.dark {
+  --background: #141210;
+  --foreground: #FAF8F5;
+  --card-bg: #1F1B18;
+  --card-border: #3A332C;
+  --header-bg: rgba(20, 18, 16, 0.96);
+  --accent-gold: #C5A880;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Touch & Mobile Interaction Utilities */
+a, button, input, select, textarea {
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Custom Typography Utilities */
+.font-serif-heading {
+  font-family: var(--font-serif);
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #C5A880;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2C2420;
+}
+
+/* Hide scrollbars for touch horizontal carousels & tabs */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile Performance Utilities */
+.gpu-accelerate {
+  transform: translateZ(0);
+}
+
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glass & Card subtle utilities */
+.border-subtle {
+  border-color: rgba(197, 168, 128, 0.3);
+}
+
+.bg-hero-overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(44, 36, 32, 0.85) 100%);
+}
+
+/* WCAG 2.1 AA Accessible Focus Rings */
+:focus-visible {
+  outline: 2px solid #C5A880;
+  outline-offset: 2px;
+}
+
+/* Screen-reader accessible Skip-to-content Link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background-color: #2C2420;
+  color: #FAF8F5;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 9999;
+  border: 1px solid #C5A880;
+  transition: top 0.2s ease-in-out;
+}
+.skip-link:focus {
+  top: 16px;
+  outline: 2px solid #C5A880;
+}
+
+/* WCAG Reduced Motion Accommodation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
